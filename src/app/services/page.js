@@ -2,6 +2,104 @@
 import { useState } from "react";
 import Link from "next/link";
 
+// ============================================================
+// SEO METADATA — Add this to a separate layout.js or page.js
+// For Next.js App Router, export this from a server component
+// ============================================================
+// export const metadata = {
+//   title: "Buy Final Year Projects, Mini Projects, Conference & Journal Papers | Journify Technologies",
+//   description: "Buy final year project implementation, mini project, conference paper writing, journal paper writing, IEEE paper, Scopus paper, plagiarism removal for engineering students in India. Trusted by 500+ students across Tamil Nadu, Chennai, Coimbatore, Madurai, Trichy. WhatsApp: 7904203916",
+//   keywords: [
+//     // FINAL YEAR PROJECT KEYWORDS
+//     "buy final year project", "final year project buying", "final year project implementation",
+//     "final year project implementation service", "final year project implementation india",
+//     "final year project implementation tamil nadu", "final year project implementation chennai",
+//     "final year project implementation coimbatore", "final year project for engineering students",
+//     "engineering final year project buying", "engineering final year project implementation",
+//     "final year project buying india", "final year project service india",
+//     "final year project help india", "final year project assistance india",
+//     "final year project developers india", "best final year project service",
+//     "final year project with source code", "final year project with documentation",
+//     "final year project with report", "final year project with ppt",
+//     "buy final year project online", "buy final year project india",
+//     "buy final year project chennai", "buy final year project coimbatore",
+//     "final year project for btech", "final year project for be",
+//     "final year project for mtech", "final year project for mca",
+//     "final year project for msc", "final year project for bsc",
+//     // MINI PROJECT KEYWORDS
+//     "buy mini project", "mini project buying", "mini project implementation",
+//     "mini project implementation india", "mini project implementation service",
+//     "mini project for engineering students", "mini project buying india",
+//     "mini project buying online", "mini project help india",
+//     "buy mini project online", "mini project with source code",
+//     "mini project developers india", "mini project service india",
+//     "mini project implementation chennai", "mini project implementation coimbatore",
+//     "mini project for btech", "mini project for be students",
+//     "3rd year mini project india", "semester project buying",
+//     "semester project implementation india", "buy semester project",
+//     // CONFERENCE PAPER KEYWORDS
+//     "buy conference paper", "conference paper buying", "conference paper writing service",
+//     "conference paper writing india", "conference paper writing for engineering students",
+//     "IEEE paper writing service", "IEEE paper writing india",
+//     "IEEE conference paper buying", "buy IEEE conference paper",
+//     "Springer paper writing service", "conference paper writing service india",
+//     "buy conference paper india", "conference paper writing tamil nadu",
+//     "conference paper writing chennai", "conference paper writing coimbatore",
+//     "conference paper for final year project", "conference paper publication india",
+//     "conference paper writing service online", "IEEE format paper writing",
+//     // JOURNAL PAPER KEYWORDS
+//     "buy journal paper", "journal paper buying", "journal paper writing service",
+//     "journal paper writing india", "Scopus paper writing", "SCI paper writing",
+//     "Scopus indexed journal paper india", "buy Scopus paper",
+//     "journal paper for engineering students", "journal paper for final year",
+//     "journal paper buying india", "journal paper writing tamil nadu",
+//     "journal paper writing chennai", "journal paper writing coimbatore",
+//     "Scopus journal paper service", "SCI journal paper service india",
+//     "buy research paper india", "research paper writing service india",
+//     "research paper writing for students", "journal publication service india",
+//     // IMPLEMENTATION KEYWORDS
+//     "project implementation buying", "project implementation service india",
+//     "buy project implementation", "implementation buying india",
+//     "project implementation for engineering", "buy implementation project",
+//     "implementation service india", "project implementation service chennai",
+//     "project implementation service coimbatore", "buy project source code",
+//     "buy project with source code india", "project source code buying",
+//     // DOMAIN KEYWORDS
+//     "machine learning project buying", "deep learning project buying",
+//     "AI project implementation india", "artificial intelligence project buying",
+//     "IoT project implementation", "IoT project buying india",
+//     "web development project buying", "android project buying",
+//     "blockchain project buying", "cloud computing project buying",
+//     "cybersecurity project buying", "data science project buying",
+//     "python project buying", "java project buying", "react project buying",
+//     "NLP project buying", "computer vision project buying",
+//     // PLAGIARISM KEYWORDS
+//     "plagiarism removal service india", "plagiarism removal india",
+//     "plagiarism removal for students", "turnitin safe content india",
+//     "AI content humanizing india", "plagiarism removal chennai",
+//     "plagiarism removal coimbatore", "plagiarism check india",
+//     "plagiarism free report india", "buy plagiarism removal",
+//     // PPT KEYWORDS
+//     "ppt presentation buying", "buy ppt presentation india",
+//     "presentation making service india", "professional ppt service",
+//     "ppt for final year project", "ppt for conference presentation",
+//     "ppt design service india", "buy project ppt india",
+//     // LOCATION KEYWORDS
+//     "academic service india", "academic service tamil nadu",
+//     "academic service chennai", "academic service coimbatore",
+//     "academic service madurai", "academic service trichy",
+//     "academic service vellore", "academic service salem",
+//     "student project service india", "student project buying india",
+//     "engineering student service india", "engineering student project help",
+//     // BRAND + TRUST KEYWORDS
+//     "journify technologies", "journify project service",
+//     "trusted project service india", "affordable project service india",
+//     "cheap project implementation india", "best project service india",
+//     "top project service india", "project service with viva support",
+//     "project service with documentation", "project service with source code",
+//   ],
+// };
+
 const miniProjects = [
   {
     icon: "💻",
@@ -187,17 +285,11 @@ function ApplyCard({ service }) {
         <h3 className="text-lg font-black text-white mb-1">{service.title}</h3>
         <p className="text-gray-500 text-sm mb-5">{service.subtitle}</p>
         <div className="flex items-end gap-2 mb-1">
-          <span className="text-3xl font-black text-white">
-            ₹{service.price.toLocaleString()}
-          </span>
-          <span className="text-gray-600 line-through text-sm mb-1">
-            ₹{service.original.toLocaleString()}
-          </span>
+          <span className="text-3xl font-black text-white">₹{service.price.toLocaleString()}</span>
+          <span className="text-gray-600 line-through text-sm mb-1">₹{service.original.toLocaleString()}</span>
         </div>
         <div className="mb-5">
-          <span className="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-0.5 rounded-full">
-            {discount}% OFF
-          </span>
+          <span className="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-0.5 rounded-full">{discount}% OFF</span>
         </div>
         <ul className="space-y-2">
           {service.features.map((f, i) => (
@@ -215,9 +307,7 @@ function ApplyCard({ service }) {
         >
           💬 Apply Now →
         </button>
-        <p className="text-center text-xs text-gray-600 mt-2">
-          Opens WhatsApp — We reply within 2 hours
-        </p>
+        <p className="text-center text-xs text-gray-600 mt-2">Opens WhatsApp — We reply within 2 hours</p>
       </div>
     </div>
   );
@@ -226,6 +316,108 @@ function ApplyCard({ service }) {
 export default function ServicesPage() {
   return (
     <div className="bg-gray-950 min-h-screen text-white">
+
+      {/* =====================================================
+          HIDDEN SEO KEYWORDS BLOCK — invisible to users,
+          visible to Google crawlers for indexing
+      ===================================================== */}
+      <div style={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", opacity: 0, pointerEvents: "none" }} aria-hidden="true">
+        <h1>Buy Final Year Project Implementation India</h1>
+        <p>
+          Buy final year project, final year project buying, final year project implementation,
+          buy final year project india, final year project buying india, final year project implementation india,
+          final year project implementation tamil nadu, final year project implementation chennai,
+          final year project implementation coimbatore, final year project for engineering students,
+          engineering final year project buying, engineering final year project implementation,
+          final year project service india, final year project help india, final year project assistance india,
+          final year project developers india, best final year project service india,
+          final year project with source code, final year project with documentation,
+          final year project with report, final year project with ppt, buy final year project online,
+          buy final year project chennai, buy final year project coimbatore,
+          final year project for btech, final year project for be, final year project for mtech,
+          final year project for mca, final year project for msc, final year project for bsc,
+          buy mini project, mini project buying, mini project implementation,
+          mini project implementation india, mini project implementation service,
+          mini project for engineering students, mini project buying india,
+          mini project buying online, mini project help india, buy mini project online,
+          mini project with source code, mini project developers india, mini project service india,
+          mini project implementation chennai, mini project implementation coimbatore,
+          mini project for btech, mini project for be students,
+          3rd year mini project india, semester project buying, semester project implementation india,
+          buy semester project, buy conference paper, conference paper buying,
+          conference paper writing service, conference paper writing india,
+          conference paper writing for engineering students, IEEE paper writing service,
+          IEEE paper writing india, IEEE conference paper buying, buy IEEE conference paper,
+          Springer paper writing service, conference paper writing service india,
+          buy conference paper india, conference paper writing tamil nadu,
+          conference paper writing chennai, conference paper writing coimbatore,
+          conference paper for final year project, conference paper publication india,
+          conference paper writing service online, IEEE format paper writing,
+          buy journal paper, journal paper buying, journal paper writing service,
+          journal paper writing india, Scopus paper writing, SCI paper writing,
+          Scopus indexed journal paper india, buy Scopus paper,
+          journal paper for engineering students, journal paper for final year,
+          journal paper buying india, journal paper writing tamil nadu,
+          journal paper writing chennai, journal paper writing coimbatore,
+          Scopus journal paper service, SCI journal paper service india,
+          buy research paper india, research paper writing service india,
+          research paper writing for students, journal publication service india,
+          project implementation buying, project implementation service india,
+          buy project implementation, implementation buying india,
+          project implementation for engineering, buy implementation project,
+          implementation service india, project implementation service chennai,
+          project implementation service coimbatore, buy project source code,
+          buy project with source code india, project source code buying,
+          machine learning project buying, deep learning project buying,
+          AI project implementation india, artificial intelligence project buying,
+          IoT project implementation, IoT project buying india,
+          web development project buying, android project buying,
+          blockchain project buying, cloud computing project buying,
+          cybersecurity project buying, data science project buying,
+          python project buying, java project buying, react project buying,
+          NLP project buying, computer vision project buying,
+          neural network project buying, image processing project buying,
+          natural language processing project buying, big data project buying,
+          embedded systems project buying, robotics project buying,
+          full stack project buying, MERN stack project buying,
+          plagiarism removal service india, plagiarism removal india,
+          plagiarism removal for students, turnitin safe content india,
+          AI content humanizing india, plagiarism removal chennai,
+          plagiarism removal coimbatore, plagiarism check india,
+          plagiarism free report india, buy plagiarism removal,
+          ppt presentation buying, buy ppt presentation india,
+          presentation making service india, professional ppt service,
+          ppt for final year project, ppt for conference presentation,
+          ppt design service india, buy project ppt india,
+          academic service india, academic service tamil nadu,
+          academic service chennai, academic service coimbatore,
+          academic service madurai, academic service trichy,
+          academic service vellore, academic service salem, academic service tirunelveli,
+          student project service india, student project buying india,
+          engineering student service india, engineering student project help,
+          journify technologies, journify project service,
+          trusted project service india, affordable project service india,
+          cheap project implementation india, best project service india,
+          top project service india, project service with viva support,
+          project service with documentation, project service with source code,
+          viva preparation india, project viva support india,
+          project report writing india, synopsis writing india,
+          buy project report india, buy synopsis india,
+          project documentation service india, academic writing service india,
+          thesis writing service india, dissertation writing service india,
+          phd assistance india, phd guidance india,
+          anna university project buying, vit project buying, srm project buying,
+          psg tech project buying, amrita project buying, sathyabama project buying,
+          saveetha project buying, kct project buying, nit project buying,
+          final year project 2024, final year project 2025, final year project 2026,
+          mini project 2024, mini project 2025, mini project 2026,
+          IEEE paper 2024, IEEE paper 2025, IEEE paper 2026,
+          Scopus paper 2024, Scopus paper 2025, Scopus paper 2026,
+          affordable final year project india, low cost project implementation,
+          best price project implementation india, project implementation starting 999,
+          final year project 3499, mini project 1999, conference paper 1999
+        </p>
+      </div>
 
       {/* HERO */}
       <section className="relative overflow-hidden py-24 px-6">
@@ -239,18 +431,24 @@ export default function ServicesPage() {
             <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse inline-block"></span>
             Academic & Research Services
           </div>
+          {/* SEO H1 — keyword rich, visible to Google */}
           <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6">
-            Professional Academic
+            Buy Final Year Projects &amp; Research Papers
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 mt-2">
-              Services & Pricing
+              Trusted by 500+ Engineering Students
             </span>
           </h1>
-          <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-10">
-            Expert help for your final year projects, mini projects, research papers and more.
-            Click Apply Now to chat with us directly on WhatsApp.
+          {/* SEO description — keyword rich */}
+          <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-4">
+            Buy final year project implementation, mini project, conference paper writing,
+            journal paper, IEEE paper and plagiarism removal in India.
+            Expert help for engineering students across Tamil Nadu.
+          </p>
+          <p className="text-gray-600 text-sm max-w-2xl mx-auto mb-10">
+            Serving students from Anna University, VIT, SRM, PSG Tech, Amrita, Sathyabama,
+            Saveetha, KCT, Coimbatore, Chennai, Madurai, Trichy, Vellore and all over India.
           </p>
 
-          {/* Stats */}
           <div className="flex flex-wrap justify-center gap-6">
             {[
               { num: "500+", label: "Projects Delivered" },
@@ -287,15 +485,14 @@ export default function ServicesPage() {
       {/* SECTION 1 — MINI PROJECTS */}
       <section className="py-20 px-6 bg-gray-900/40">
         <div className="max-w-6xl mx-auto">
-
           <div className="flex items-center gap-4 mb-10">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
             <div className="text-center">
               <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold px-5 py-2 rounded-full mb-3">
                 📘 Section 1
               </div>
-              <h2 className="text-3xl md:text-4xl font-black text-white">Mini Projects</h2>
-              <p className="text-gray-500 mt-2">Affordable solutions for mini project needs</p>
+              <h2 className="text-3xl md:text-4xl font-black text-white">Buy Mini Projects</h2>
+              <p className="text-gray-500 mt-2">Mini project implementation &amp; buying service for engineering students</p>
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
           </div>
@@ -309,8 +506,9 @@ export default function ServicesPage() {
           <div className="mt-8 max-w-3xl mx-auto bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-5 flex items-start gap-3">
             <span className="text-cyan-400 text-xl flex-shrink-0">💡</span>
             <p className="text-gray-400 text-sm">
-              Mini project packages are designed for 3rd year and semester projects.
-              Includes complete source code, documentation and basic PPT.
+              Buy mini project implementation for 3rd year and semester projects in India.
+              Includes complete source code, documentation and PPT. Affordable mini project
+              buying service for BTech, BE, MCA students across Chennai, Coimbatore, Tamil Nadu.
               Click Apply Now to discuss your requirements on WhatsApp.
             </p>
           </div>
@@ -320,15 +518,14 @@ export default function ServicesPage() {
       {/* SECTION 2 — FINAL YEAR PROJECTS */}
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
-
           <div className="flex items-center gap-4 mb-10">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
             <div className="text-center">
               <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold px-5 py-2 rounded-full mb-3">
                 🏆 Section 2
               </div>
-              <h2 className="text-3xl md:text-4xl font-black text-white">Final Year Projects</h2>
-              <p className="text-gray-500 mt-2">Complete solutions for final year project and publication needs</p>
+              <h2 className="text-3xl md:text-4xl font-black text-white">Buy Final Year Projects</h2>
+              <p className="text-gray-500 mt-2">Final year project implementation &amp; buying service with conference and journal paper support</p>
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
           </div>
@@ -336,11 +533,11 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
             <div className="bg-orange-500/5 border border-orange-500/20 rounded-xl p-4 text-center">
               <p className="text-orange-400 font-bold text-sm mb-1">📄 Conference Track</p>
-              <p className="text-gray-500 text-xs">Implementation + Conference Paper</p>
+              <p className="text-gray-500 text-xs">Buy Final Year Project + Conference Paper (IEEE/Springer)</p>
             </div>
             <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4 text-center">
               <p className="text-blue-400 font-bold text-sm mb-1">📝 Journal Track</p>
-              <p className="text-gray-500 text-xs">Implementation + Journal Paper</p>
+              <p className="text-gray-500 text-xs">Buy Final Year Project + Journal Paper (Scopus/SCI)</p>
             </div>
           </div>
 
@@ -353,9 +550,11 @@ export default function ServicesPage() {
           <div className="mt-8 bg-amber-500/5 border border-amber-500/20 rounded-2xl p-5 flex items-start gap-3">
             <span className="text-amber-400 text-xl flex-shrink-0">⭐</span>
             <p className="text-gray-400 text-sm">
-              Final year packages include complete project implementation with viva support, synopsis, PPT and full documentation.
-              Conference track targets IEEE/Springer publications. Journal track targets Scopus/SCI indexed journals.
-              Click Apply Now to chat with us and get started immediately.
+              Buy final year project implementation with viva support, synopsis, PPT and full documentation.
+              Conference paper buying service for IEEE and Springer publications.
+              Journal paper buying service for Scopus and SCI indexed journals.
+              Trusted final year project buying service for engineering students across India —
+              Chennai, Coimbatore, Madurai, Trichy, Vellore, Tamil Nadu and all states.
             </p>
           </div>
         </div>
@@ -364,7 +563,6 @@ export default function ServicesPage() {
       {/* ADD-ONS */}
       <section className="py-20 px-6 bg-gray-900/40">
         <div className="max-w-6xl mx-auto">
-
           <div className="flex items-center gap-4 mb-10">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
             <div className="text-center">
@@ -372,7 +570,7 @@ export default function ServicesPage() {
                 ➕ Add-ons
               </div>
               <h2 className="text-3xl font-black text-white">Extra Services</h2>
-              <p className="text-gray-500 mt-2">Enhance your project with these add-ons</p>
+              <p className="text-gray-500 mt-2">PPT presentation buying &amp; plagiarism removal service in India</p>
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
           </div>
@@ -385,13 +583,57 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
+      {/* SEO FAQ SECTION — Google loves FAQ with keywords */}
       <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-cyan-400 font-bold text-xs uppercase tracking-widest mb-3">FAQ</p>
+            <h2 className="text-4xl font-black text-white mb-3">Frequently Asked Questions</h2>
+            <p className="text-gray-500">Everything about buying final year projects &amp; research papers in India</p>
+          </div>
+          <div className="flex flex-col gap-4">
+            {[
+              {
+                q: "Where can I buy final year project implementation in India?",
+                a: "You can buy final year project implementation at Journify Technologies. We provide complete final year project implementation with source code, documentation, synopsis, PPT and viva support for engineering students across India — Chennai, Coimbatore, Madurai, Trichy, Tamil Nadu and all states."
+              },
+              {
+                q: "How to buy mini project for engineering students in India?",
+                a: "Buying a mini project at Journify is simple. Click Apply Now on the mini project card above, WhatsApp opens automatically, our team discusses your requirements and delivers your complete mini project with source code and documentation."
+              },
+              {
+                q: "Where to buy conference paper writing service in India?",
+                a: "Journify Technologies provides conference paper writing service in IEEE and Springer format for engineering students. We offer conference paper buying service starting at ₹1999 for mini projects and ₹3999 for final year projects."
+              },
+              {
+                q: "How to buy Scopus journal paper for final year project in India?",
+                a: "You can buy Scopus indexed journal paper writing service at Journify Technologies. Our journal paper buying service starts at ₹5499 and includes full paper writing, abstract, results, references and plagiarism-free guarantee."
+              },
+              {
+                q: "Is buying final year project implementation legal and safe?",
+                a: "Yes. Journify Technologies provides fully confidential academic assistance service. Your project details, source code and paper content are never shared with anyone. We serve 500+ students with 98% satisfaction rate."
+              },
+              {
+                q: "Which domains are covered for final year project buying?",
+                a: "We cover all engineering domains — Machine Learning, Deep Learning, Artificial Intelligence, IoT, Web Development, Android, Blockchain, Cloud Computing, Cybersecurity, Data Science, Computer Vision, NLP, Python, Java, React and more."
+              },
+            ].map((faq, i) => (
+              <div key={i} className="bg-gray-900 border border-white/5 rounded-2xl p-6 hover:border-cyan-500/30 transition">
+                <h3 className="font-black text-white mb-3 text-sm">{faq.q}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY CHOOSE US */}
+      <section className="py-20 px-6 bg-gray-900/40">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-cyan-400 font-bold text-xs uppercase tracking-widest mb-3">Why Us</p>
             <h2 className="text-4xl font-black text-white mb-3">Why Students Trust Journify.</h2>
-            <p className="text-gray-500">500+ students cannot be wrong</p>
+            <p className="text-gray-500">Best final year project buying service in Tamil Nadu — 500+ students trust us</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
@@ -402,8 +644,7 @@ export default function ServicesPage() {
               { icon: "🔄", title: "Free Revisions" },
               { icon: "💬", title: "24/7 Support" },
             ].map((item, i) => (
-              <div key={i}
-                className="bg-gray-900 border border-white/5 rounded-2xl p-5 text-center hover:border-cyan-500/30 transition group">
+              <div key={i} className="bg-gray-900 border border-white/5 rounded-2xl p-5 text-center hover:border-cyan-500/30 transition group">
                 <div className="text-3xl mb-3">{item.icon}</div>
                 <h3 className="font-bold text-white text-xs group-hover:text-cyan-400 transition">{item.title}</h3>
               </div>
@@ -413,12 +654,12 @@ export default function ServicesPage() {
       </section>
 
       {/* PROCESS */}
-      <section className="py-20 px-6 bg-gray-900/40">
+      <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-cyan-400 font-bold text-xs uppercase tracking-widest mb-3">Simple Process</p>
-            <h2 className="text-4xl font-black text-white mb-3">How to Get Started</h2>
-            <p className="text-gray-500">4 simple steps — no registration required</p>
+            <h2 className="text-4xl font-black text-white mb-3">How to Buy Final Year Project</h2>
+            <p className="text-gray-500">4 simple steps to buy your project — no registration required</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
@@ -427,8 +668,7 @@ export default function ServicesPage() {
               { icon: "🤝", num: "03", title: "Discuss & Confirm", desc: "Our team discusses your requirements and confirms timeline." },
               { icon: "🎉", num: "04", title: "Work Begins", desc: "We start working and deliver on time with full support." },
             ].map((s, i) => (
-              <div key={i}
-                className="bg-gray-900 border border-white/5 rounded-2xl p-6 text-center hover:border-cyan-500/20 transition relative group">
+              <div key={i} className="bg-gray-900 border border-white/5 rounded-2xl p-6 text-center hover:border-cyan-500/20 transition relative group">
                 <div className="text-4xl mb-4">{s.icon}</div>
                 <p className="text-cyan-400 text-xs font-black tracking-widest mb-2">STEP {s.num}</p>
                 <h3 className="font-black text-white mb-2 text-sm group-hover:text-cyan-400 transition">{s.title}</h3>
@@ -442,9 +682,13 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="py-20 px-6 bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-t border-white/5">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">Ready to Get Started?</h2>
-          <p className="text-gray-400 text-lg mb-8">
-            Click Apply Now on any service above or contact us directly. Free consultation, no advance payment!
+          <h2 className="text-4xl font-black text-white mb-4">Ready to Buy Your Project?</h2>
+          <p className="text-gray-400 text-lg mb-2">
+            Best final year project buying service in India. Free consultation, no advance payment!
+          </p>
+          <p className="text-gray-600 text-sm mb-8">
+            Serving engineering students from Chennai, Coimbatore, Madurai, Trichy, Vellore,
+            Salem, Tirunelveli and all cities across Tamil Nadu and India.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="mailto:journifyorg@gmail.com"
@@ -457,7 +701,7 @@ export default function ServicesPage() {
             </a>
           </div>
           <p className="text-gray-600 text-sm mt-5">
-            Free consultation · No advance payment · Response within 2 hours
+            Free consultation · No advance payment · Response within Minutes
           </p>
         </div>
       </section>
