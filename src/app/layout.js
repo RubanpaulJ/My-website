@@ -10,9 +10,9 @@ export const metadata = {
   },
 
   icons: {
-  icon: "/logo.jpeg",
+  icon: "/favicon.ico",
   apple: "/logo.jpeg",
-  shortcut: "/logo.jpeg",
+  shortcut: "/favicon.ico",
 },
   description: "Journify Technologies provides expert academic services — final year project implementation, mini project, conference paper writing, journal paper writing, IEEE paper, Scopus paper, PPT presentation and plagiarism removal. Trusted by 500+ students across Tamil Nadu, Chennai, Coimbatore, Madurai, Trichy.",
   keywords: [
@@ -217,6 +217,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="canonical" href="https://journify.tech" />
+        <link rel="icon" href="/logo.jpeg" type="image/jpeg" sizes="any" />
         <meta name="geo.region" content="IN-TN" />
         <meta name="geo.placename" content="Chennai, Tamil Nadu, India" />
         <meta name="geo.position" content="13.0827;80.2707" />

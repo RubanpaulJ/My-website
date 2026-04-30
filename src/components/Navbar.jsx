@@ -71,7 +71,7 @@ export default function Navbar() {
   <img
     src="/logo.jpeg"
     alt="Journify Logo"
-    className="w-8 h-8 rounded-lg object-contain"
+    className="w-8 h-8 rounded-full object-cover"
   />
   <span className="text-xl font-black text-white tracking-tight">
     Journify<span className="text-cyan-400">.</span>
