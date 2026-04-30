@@ -67,14 +67,16 @@ export default function Navbar() {
       }`}>
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-black text-sm">J</span>
-          </div>
-          <span className="text-xl font-black text-white tracking-tight">
-            Journify<span className="text-cyan-400">.</span>
-          </span>
-        </Link>
+<Link href="/" className="flex items-center gap-2">
+  <img
+    src="/logo.jpeg"
+    alt="Journify Logo"
+    className="w-8 h-8 rounded-lg object-contain"
+  />
+  <span className="text-xl font-black text-white tracking-tight">
+    Journify<span className="text-cyan-400">.</span>
+  </span>
+</Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-1">

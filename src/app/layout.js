@@ -8,6 +8,12 @@ export const metadata = {
     default: "Journify. — Final Year Projects, Research Papers & Academic Services India",
     template: "%s | Journify Technologies",
   },
+
+  icons: {
+  icon: "/logo.jpeg",
+  apple: "/logo.jpeg",
+  shortcut: "/logo.jpeg",
+},
   description: "Journify Technologies provides expert academic services — final year project implementation, mini project, conference paper writing, journal paper writing, IEEE paper, Scopus paper, PPT presentation and plagiarism removal. Trusted by 500+ students across Tamil Nadu, Chennai, Coimbatore, Madurai, Trichy.",
   keywords: [
     // Brand keywords
