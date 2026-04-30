@@ -701,7 +701,7 @@ export default function ServicesPage() {
             </a>
           </div>
           <p className="text-gray-600 text-sm mt-5">
-            Free consultation · No advance payment · Response within Minutes
+            Free consultation · No advance payment · Response within 
           </p>
         </div>
       </section>
