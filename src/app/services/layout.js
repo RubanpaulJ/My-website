@@ -211,12 +211,7 @@ export default function ServicesLayout({ children }) {
                 },
               ],
             },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "reviewCount": "500",
-              "bestRating": "5",
-            },
+            
           }),
         }}
       />
