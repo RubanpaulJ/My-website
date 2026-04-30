@@ -133,7 +133,14 @@ const addons = [
     badgeColor: "bg-orange-500/20 text-orange-300 border border-orange-500/30",
     color: "from-orange-500 to-amber-500",
     border: "border-orange-500/30",
-    features: ["Professional design", "Up to 20 slides", "Custom color theme", "Charts & diagrams", "Speaker notes", "Editable PPTX file"],
+    features: [
+      "Professional design",
+      "Up to 20 slides",
+      "Custom color theme",
+      "Charts & diagrams",
+      "Speaker notes",
+      "Editable PPTX file",
+    ],
   },
   {
     icon: "🛡️",
@@ -145,12 +152,25 @@ const addons = [
     badgeColor: "bg-green-500/20 text-green-300 border border-green-500/30",
     color: "from-green-500 to-emerald-500",
     border: "border-green-500/30",
-    features: ["Turnitin-safe content", "AI content humanizing", "Plagiarism report included", "Up to 5,000 words", "24 hour delivery", "100% unique guaranteed"],
+    features: [
+      "Turnitin-safe content",
+      "AI content humanizing",
+      "Plagiarism report included",
+      "Up to 5,000 words",
+      "24 hour delivery",
+      "100% unique guaranteed",
+    ],
   },
 ];
 
-function ServiceCard({ service }) {
-  const [applied, setApplied] = useState(false);
+function ApplyCard({ service }) {
+  const handleApply = () => {
+    const message = `Hi! I want to apply for *${service.title}* (₹${service.price.toLocaleString()}). Please guide me on next steps.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/917904203916?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   const discount = Math.round(((service.original - service.price) / service.original) * 100);
 
   return (
@@ -167,8 +187,12 @@ function ServiceCard({ service }) {
         <h3 className="text-lg font-black text-white mb-1">{service.title}</h3>
         <p className="text-gray-500 text-sm mb-5">{service.subtitle}</p>
         <div className="flex items-end gap-2 mb-1">
-          <span className="text-3xl font-black text-white">₹{service.price.toLocaleString()}</span>
-          <span className="text-gray-600 line-through text-sm mb-1">₹{service.original.toLocaleString()}</span>
+          <span className="text-3xl font-black text-white">
+            ₹{service.price.toLocaleString()}
+          </span>
+          <span className="text-gray-600 line-through text-sm mb-1">
+            ₹{service.original.toLocaleString()}
+          </span>
         </div>
         <div className="mb-5">
           <span className="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-0.5 rounded-full">
@@ -186,16 +210,14 @@ function ServiceCard({ service }) {
       </div>
       <div className="p-5 pt-0">
         <button
-          onClick={() => { setApplied(true); setTimeout(() => setApplied(false), 3000); }}
-          className={`w-full py-3.5 rounded-xl font-black text-sm transition-all duration-300 ${
-            applied
-              ? "bg-green-500 text-white"
-              : `bg-gradient-to-r ${service.color} text-white hover:opacity-90 hover:scale-[1.02] shadow-lg`
-          }`}
+          onClick={handleApply}
+          className={`w-full py-3.5 rounded-xl font-black text-sm transition-all duration-300 bg-gradient-to-r ${service.color} text-white hover:opacity-90 hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2`}
         >
-          {applied ? "✅ We will contact you soon!" : "Apply Now →"}
+          💬 Apply Now →
         </button>
-        <p className="text-center text-xs text-gray-600 mt-2">We will contact you on WhatsApp</p>
+        <p className="text-center text-xs text-gray-600 mt-2">
+          Opens WhatsApp — We reply within 2 hours
+        </p>
       </div>
     </div>
   );
@@ -210,7 +232,7 @@ export default function ServicesPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-blue-950/20 to-gray-950"></div>
         <div className="absolute top-10 right-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 left-10 w-56 h-56 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute inset-0 opacity-30" style={{backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)", backgroundSize: "40px 40px"}}></div>
+        <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
 
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-cyan-400 text-xs font-bold px-5 py-2 rounded-full mb-8 uppercase tracking-widest">
@@ -224,7 +246,8 @@ export default function ServicesPage() {
             </span>
           </h1>
           <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-10">
-            Expert help for your final year projects, mini projects, research papers and more. Quality guaranteed, delivered on time.
+            Expert help for your final year projects, mini projects, research papers and more.
+            Click Apply Now to chat with us directly on WhatsApp.
           </p>
 
           {/* Stats */}
@@ -233,7 +256,7 @@ export default function ServicesPage() {
               { num: "500+", label: "Projects Delivered" },
               { num: "200+", label: "Papers Published" },
               { num: "98%", label: "Satisfaction Rate" },
-              { num: "24hr", label: "Quick Support" },
+              { num: "2hrs", label: "Response Time" },
             ].map((s, i) => (
               <div key={i} className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center">
                 <p className="text-2xl font-black text-white">{s.num}</p>
@@ -244,11 +267,27 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* HOW APPLY WORKS */}
+      <section className="py-10 px-6 bg-green-500/5 border-y border-green-500/20">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">💬</span>
+            <div>
+              <p className="font-black text-white text-sm">How to Apply — It is Simple & Free!</p>
+              <p className="text-gray-400 text-xs">Click Apply Now → WhatsApp opens → Chat with our team → Get started!</p>
+            </div>
+          </div>
+          <a href="https://wa.me/917904203916" target="_blank" rel="noopener noreferrer"
+            className="bg-green-500 hover:bg-green-400 text-gray-900 px-6 py-3 rounded-xl font-black text-sm transition whitespace-nowrap">
+            💬 Chat Now on WhatsApp
+          </a>
+        </div>
+      </section>
+
       {/* SECTION 1 — MINI PROJECTS */}
       <section className="py-20 px-6 bg-gray-900/40">
         <div className="max-w-6xl mx-auto">
 
-          {/* Section Header */}
           <div className="flex items-center gap-4 mb-10">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
             <div className="text-center">
@@ -263,17 +302,16 @@ export default function ServicesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {miniProjects.map((svc, i) => (
-              <ServiceCard key={i} service={svc} />
+              <ApplyCard key={i} service={svc} />
             ))}
           </div>
 
-          {/* Mini project note */}
           <div className="mt-8 max-w-3xl mx-auto bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-5 flex items-start gap-3">
             <span className="text-cyan-400 text-xl flex-shrink-0">💡</span>
             <p className="text-gray-400 text-sm">
               Mini project packages are designed for 3rd year and semester projects.
               Includes complete source code, documentation and basic PPT.
-              Contact us on WhatsApp for custom requirements.
+              Click Apply Now to discuss your requirements on WhatsApp.
             </p>
           </div>
         </div>
@@ -283,7 +321,6 @@ export default function ServicesPage() {
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
 
-          {/* Section Header */}
           <div className="flex items-center gap-4 mb-10">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
             <div className="text-center">
@@ -291,12 +328,11 @@ export default function ServicesPage() {
                 🏆 Section 2
               </div>
               <h2 className="text-3xl md:text-4xl font-black text-white">Final Year Projects</h2>
-              <p className="text-gray-500 mt-2">Complete solutions for final year project & publication needs</p>
+              <p className="text-gray-500 mt-2">Complete solutions for final year project and publication needs</p>
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
           </div>
 
-          {/* Comparison hint */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
             <div className="bg-orange-500/5 border border-orange-500/20 rounded-xl p-4 text-center">
               <p className="text-orange-400 font-bold text-sm mb-1">📄 Conference Track</p>
@@ -310,17 +346,16 @@ export default function ServicesPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {finalYearProjects.map((svc, i) => (
-              <ServiceCard key={i} service={svc} />
+              <ApplyCard key={i} service={svc} />
             ))}
           </div>
 
-          {/* Final year note */}
           <div className="mt-8 bg-amber-500/5 border border-amber-500/20 rounded-2xl p-5 flex items-start gap-3">
             <span className="text-amber-400 text-xl flex-shrink-0">⭐</span>
             <p className="text-gray-400 text-sm">
               Final year packages include complete project implementation with viva support, synopsis, PPT and full documentation.
               Conference track targets IEEE/Springer publications. Journal track targets Scopus/SCI indexed journals.
-              Choose the track that matches your institution's requirement.
+              Click Apply Now to chat with us and get started immediately.
             </p>
           </div>
         </div>
@@ -329,6 +364,7 @@ export default function ServicesPage() {
       {/* ADD-ONS */}
       <section className="py-20 px-6 bg-gray-900/40">
         <div className="max-w-6xl mx-auto">
+
           <div className="flex items-center gap-4 mb-10">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
             <div className="text-center">
@@ -343,7 +379,7 @@ export default function ServicesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {addons.map((svc, i) => (
-              <ServiceCard key={i} service={svc} />
+              <ApplyCard key={i} service={svc} />
             ))}
           </div>
         </div>
@@ -355,7 +391,7 @@ export default function ServicesPage() {
           <div className="text-center mb-12">
             <p className="text-cyan-400 font-bold text-xs uppercase tracking-widest mb-3">Why Us</p>
             <h2 className="text-4xl font-black text-white mb-3">Why Students Trust Journify.</h2>
-            <p className="text-gray-500">500+ students can't be wrong</p>
+            <p className="text-gray-500">500+ students cannot be wrong</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
@@ -366,9 +402,37 @@ export default function ServicesPage() {
               { icon: "🔄", title: "Free Revisions" },
               { icon: "💬", title: "24/7 Support" },
             ].map((item, i) => (
-              <div key={i} className="bg-gray-900 border border-white/5 rounded-2xl p-5 text-center hover:border-cyan-500/30 transition group">
+              <div key={i}
+                className="bg-gray-900 border border-white/5 rounded-2xl p-5 text-center hover:border-cyan-500/30 transition group">
                 <div className="text-3xl mb-3">{item.icon}</div>
                 <h3 className="font-bold text-white text-xs group-hover:text-cyan-400 transition">{item.title}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section className="py-20 px-6 bg-gray-900/40">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-cyan-400 font-bold text-xs uppercase tracking-widest mb-3">Simple Process</p>
+            <h2 className="text-4xl font-black text-white mb-3">How to Get Started</h2>
+            <p className="text-gray-500">4 simple steps — no registration required</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: "👆", num: "01", title: "Click Apply Now", desc: "Choose any service and click the Apply Now button." },
+              { icon: "💬", num: "02", title: "WhatsApp Opens", desc: "A pre-filled WhatsApp message opens automatically." },
+              { icon: "🤝", num: "03", title: "Discuss & Confirm", desc: "Our team discusses your requirements and confirms timeline." },
+              { icon: "🎉", num: "04", title: "Work Begins", desc: "We start working and deliver on time with full support." },
+            ].map((s, i) => (
+              <div key={i}
+                className="bg-gray-900 border border-white/5 rounded-2xl p-6 text-center hover:border-cyan-500/20 transition relative group">
+                <div className="text-4xl mb-4">{s.icon}</div>
+                <p className="text-cyan-400 text-xs font-black tracking-widest mb-2">STEP {s.num}</p>
+                <h3 className="font-black text-white mb-2 text-sm group-hover:text-cyan-400 transition">{s.title}</h3>
+                <p className="text-gray-500 text-xs leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -378,12 +442,12 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="py-20 px-6 bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-t border-white/5">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">Need a Custom Quote?</h2>
+          <h2 className="text-4xl font-black text-white mb-4">Ready to Get Started?</h2>
           <p className="text-gray-400 text-lg mb-8">
-            Have a unique requirement? Contact us and we will give you the best price!
+            Click Apply Now on any service above or contact us directly. Free consultation, no advance payment!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="mailto:support@journify.com"
+            <a href="mailto:journifyorg@gmail.com"
               className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-2xl font-black text-lg transition">
               📧 Email Us
             </a>
