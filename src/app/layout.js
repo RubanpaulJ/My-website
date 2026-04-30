@@ -180,7 +180,7 @@ export const metadata = {
     description: "Expert academic services for students. Final year projects, conference papers, journal papers, PPT and plagiarism removal. Trusted by 500+ students across Tamil Nadu.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.jpeg",
         width: 1200,
         height: 630,
         alt: "Journify Technologies - Academic Services",
@@ -191,7 +191,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Journify. — Final Year Projects & Research Papers",
     description: "Expert academic services for students across India. Final year projects, conference papers, journal papers and more.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpeg"],
     creator: "@journifytech",
   },
   robots: {
@@ -237,8 +237,8 @@ export default function RootLayout({ children }) {
               "name": "Journify Technologies",
               "alternateName": ["Journify", "journify.tech", "Journify Tech"],
               "url": "https://journify.tech",
-              "logo": "https://journify.tech/logo.png",
-              "image": "https://journify.tech/og-image.png",
+              "logo": "https://journify.tech/logo.jpeg",
+              "image": "https://journify.tech/og-image.jpeg",
               "description": "Journify Technologies provides expert academic services including final year project implementation, conference paper writing, journal paper writing, PPT presentation and plagiarism removal for students across India.",
               "foundingDate": "2024",
               "address": {
@@ -361,7 +361,7 @@ export default function RootLayout({ children }) {
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "Journify Technologies",
-              "image": "https://journify.tech/og-image.png",
+              "image": "https://journify.tech/og-image.jpeg",
               "url": "https://journify.tech",
               "telephone": "+91-7904203916",
               "priceRange": "₹299 - ₹5499",
