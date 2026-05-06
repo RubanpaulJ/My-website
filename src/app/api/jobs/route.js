@@ -21,6 +21,7 @@ async function fetchJobsForQuery(query) {
         "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
         "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
       },
+      signal: AbortSignal.timeout(6000),
     }
   );
   const data = await response.json();
@@ -61,20 +62,16 @@ export async function GET(request) {
       });
     }
 
-    // Fetch from ALL 4 queries to get more jobs
+    // Fetch from ALL 4 queries in parallel to stay within Netlify's 10s timeout
     console.log("Fetching fresh jobs from JSearch...");
-    const allResults = [];
-
-    for (const query of searchQueries) {
-      try {
-        const results = await fetchJobsForQuery(query);
-        allResults.push(...results);
-        // Small delay between requests
-        await new Promise(r => setTimeout(r, 200));
-      } catch (e) {
-        console.error(`Failed query: ${query}`, e);
+    const settled = await Promise.allSettled(searchQueries.map(fetchJobsForQuery));
+    const allResults = settled.flatMap((r, i) => {
+      if (r.status === "rejected") {
+        console.error(`Failed query: ${searchQueries[i]}`, r.reason);
+        return [];
       }
-    }
+      return r.value;
+    });
 
     if (allResults.length === 0) {
       // API failed — fall back to cached data rather than showing empty
