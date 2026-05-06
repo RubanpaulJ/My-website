@@ -10,16 +10,24 @@ export default function JobsPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [jobTypes, setJobTypes] = useState([]);
   const [workModes, setWorkModes] = useState([]);
+  const [fetchError, setFetchError] = useState(false);
 
   const fetchJobs = async (force = false) => {
     setLoading(true);
+    setFetchError(false);
     try {
       const res = await fetch(`/api/jobs${force ? "?force=true" : ""}`);
       const data = await res.json();
-      setJobs(data.jobs || []);
-      setLastFetched(data.lastFetched);
+      if (!res.ok) throw new Error(data.error || "Server error");
+      if (data.jobs?.length > 0) {
+        setJobs(data.jobs);
+        setLastFetched(data.lastFetched);
+      } else if (jobs.length === 0) {
+        setFetchError(true);
+      }
     } catch (err) {
       console.error("Failed to fetch jobs:", err);
+      if (jobs.length === 0) setFetchError(true);
     }
     setLoading(false);
     setRefreshing(false);
@@ -236,6 +244,18 @@ export default function JobsPage() {
               <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-gray-500 font-medium">Fetching real-time jobs...</p>
               <p className="text-gray-400 text-sm mt-1">Searching Google Jobs & LinkedIn</p>
+            </div>
+          ) : fetchError ? (
+            <div className="text-center py-24 bg-white rounded-2xl border border-gray-100">
+              <div className="text-6xl mb-4">⚠️</div>
+              <p className="text-xl font-black text-gray-800 mb-2">Could not load jobs</p>
+              <p className="text-gray-400 text-sm mb-6">There was a problem fetching jobs. Please try again.</p>
+              <button
+                onClick={() => { setRefreshing(true); fetchJobs(true); }}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-sm font-bold transition"
+              >
+                Retry
+              </button>
             </div>
           ) : filtered.length > 0 ? (
             <div className="space-y-4">

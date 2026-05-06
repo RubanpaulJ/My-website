@@ -217,7 +217,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="canonical" href="https://journify.tech" />
-        <link rel="icon" href="/logo.jpeg" type="image/jpeg" sizes="any" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta name="geo.region" content="IN-TN" />
         <meta name="geo.placename" content="Chennai, Tamil Nadu, India" />
         <meta name="geo.position" content="13.0827;80.2707" />

@@ -77,7 +77,18 @@ export async function GET(request) {
     }
 
     if (allResults.length === 0) {
-      return NextResponse.json({ jobs: [], cached: false, error: "No jobs found" });
+      // API failed — fall back to cached data rather than showing empty
+      const { data: cachedJobs } = await supabase
+        .from("live_jobs")
+        .select("*")
+        .order("posted_at", { ascending: false })
+        .limit(50);
+      return NextResponse.json({
+        jobs: cachedJobs || [],
+        cached: true,
+        lastFetched: lastFetched?.toISOString(),
+        warning: "Live fetch failed — showing cached jobs",
+      });
     }
 
     // Remove duplicates by job_id
@@ -111,14 +122,14 @@ export async function GET(request) {
       source: job.job_publisher || "Google Jobs",
     }));
 
-    // Clear old jobs and insert new ones
-    await supabase.from("live_jobs").delete().neq("id", "placeholder");
-    
-    // Insert in batches of 20
+    // Upsert new jobs FIRST (no empty-table gap), then delete stale ones
     for (let i = 0; i < jobs.length; i += 20) {
       const batch = jobs.slice(i, i + 20);
-      await supabase.from("live_jobs").insert(batch);
+      await supabase.from("live_jobs").upsert(batch, { onConflict: "id" });
     }
+    const newIds = jobs.map(j => j.id);
+    await supabase.from("live_jobs").delete().not("id", "in", `(${newIds.join(",")})`);
+
 
     // Update last fetched
     await supabase.from("job_meta").upsert({
@@ -135,6 +146,16 @@ export async function GET(request) {
 
   } catch (err) {
     console.error("Job fetch error:", err);
+    try {
+      const { data: cachedJobs } = await supabase
+        .from("live_jobs")
+        .select("*")
+        .order("posted_at", { ascending: false })
+        .limit(50);
+      if (cachedJobs?.length > 0) {
+        return NextResponse.json({ jobs: cachedJobs, cached: true, warning: "Error — showing cached jobs" });
+      }
+    } catch (e) {}
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
