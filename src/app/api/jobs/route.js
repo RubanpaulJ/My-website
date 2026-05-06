@@ -8,9 +8,6 @@ const supabase = createClient(
 
 const searchQueries = [
   "fresher software developer India",
-  "entry level IT jobs India",
-  "junior developer fresher India",
-  "fresher web developer India",
 ];
 
 async function fetchJobsForQuery(query) {
@@ -47,8 +44,8 @@ export async function GET(request) {
     const now = new Date();
     const hoursSince = lastFetched ? (now - lastFetched) / (1000 * 60 * 60) : 999;
 
-    // Return cached if less than 24 hours
-    if (!force && hoursSince < 24) {
+    // Return cached if less than 7 days
+    if (!force && hoursSince < 168) {
       const { data: cachedJobs } = await supabase
         .from("live_jobs")
         .select("*")
