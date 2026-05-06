@@ -6,23 +6,16 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-const searchQueries = [
-  "fresher software developer India",
-];
+async function fetchAdzunaJobs() {
+  const appId = process.env.ADZUNA_APP_ID;
+  const appKey = process.env.ADZUNA_APP_KEY;
 
-async function fetchJobsForQuery(query) {
   const response = await fetch(
-    `https://jsearch.p.rapidapi.com/search?query=${encodeURIComponent(query)}&num_pages=3&page=1`,
-    {
-      headers: {
-        "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
-        "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
-      },
-      signal: AbortSignal.timeout(6000),
-    }
+    `https://api.adzuna.com/v1/api/jobs/in/search/1?app_id=${appId}&app_key=${appKey}&results_per_page=50&what=software+developer+fresher&content-type=application/json`,
+    { signal: AbortSignal.timeout(8000) }
   );
   const data = await response.json();
-  return data.data || [];
+  return data.results || [];
 }
 
 export async function GET(request) {
@@ -52,26 +45,26 @@ export async function GET(request) {
         .order("posted_at", { ascending: false })
         .limit(50);
 
-      return NextResponse.json({
-        jobs: cachedJobs || [],
-        cached: true,
-        lastFetched: lastFetched?.toISOString(),
-      });
+      if (cachedJobs?.length > 0) {
+        return NextResponse.json({
+          jobs: cachedJobs,
+          cached: true,
+          lastFetched: lastFetched?.toISOString(),
+        });
+      }
     }
 
-    // Fetch from ALL 4 queries in parallel to stay within Netlify's 10s timeout
-    console.log("Fetching fresh jobs from JSearch...");
-    const settled = await Promise.allSettled(searchQueries.map(fetchJobsForQuery));
-    const allResults = settled.flatMap((r, i) => {
-      if (r.status === "rejected") {
-        console.error(`Failed query: ${searchQueries[i]}`, r.reason);
-        return [];
-      }
-      return r.value;
-    });
+    // Fetch fresh jobs from Adzuna
+    console.log("Fetching fresh jobs from Adzuna...");
+    let results = [];
+    try {
+      results = await fetchAdzunaJobs();
+    } catch (e) {
+      console.error("Adzuna fetch failed:", e);
+    }
 
-    if (allResults.length === 0) {
-      // API failed — fall back to cached data rather than showing empty
+    if (results.length === 0) {
+      // Fall back to cached data
       const { data: cachedJobs } = await supabase
         .from("live_jobs")
         .select("*")
@@ -85,51 +78,41 @@ export async function GET(request) {
       });
     }
 
-    // Remove duplicates by job_id
-    const seen = new Set();
-    const unique = allResults.filter(job => {
-      if (seen.has(job.job_id)) return false;
-      seen.add(job.job_id);
-      return true;
-    });
-
     // Format jobs
-    const jobs = unique.map((job) => ({
-      id: job.job_id,
-      title: job.job_title || "Untitled",
-      company: job.employer_name || "Unknown Company",
-      location: job.job_city
-        ? `${job.job_city}, ${job.job_country || "India"}`
-        : (job.job_country || "India"),
-      type: job.job_employment_type
-        ? job.job_employment_type.replace(/_/g, " ")
-        : "Full Time",
-      salary: job.job_min_salary && job.job_max_salary
-        ? `₹${Math.round(job.job_min_salary / 1000)}K - ₹${Math.round(job.job_max_salary / 1000)}K`
-        : "Competitive",
-      apply_link: job.job_apply_link || "#",
-      description: job.job_description
-        ? job.job_description.slice(0, 200) + "..."
+    const jobs = results.map((job) => ({
+      id: String(job.id),
+      title: job.title || "Untitled",
+      company: job.company?.display_name || "Unknown Company",
+      location: job.location?.display_name || "India",
+      type: job.contract_time === "part_time" ? "Part Time" : "Full Time",
+      salary:
+        job.salary_min && job.salary_max
+          ? `₹${Math.round(job.salary_min / 1000)}K - ₹${Math.round(job.salary_max / 1000)}K`
+          : "Competitive",
+      apply_link: job.redirect_url || "#",
+      description: job.description
+        ? job.description.slice(0, 200) + "..."
         : "Click Apply to see full details.",
-      company_logo: job.employer_logo || null,
-      posted_at: job.job_posted_at_datetime_utc || new Date().toISOString(),
-      source: job.job_publisher || "Google Jobs",
+      company_logo: null,
+      posted_at: job.created || new Date().toISOString(),
+      source: "Adzuna",
     }));
 
-    // Upsert new jobs FIRST (no empty-table gap), then delete stale ones
+    // Upsert to Supabase cache
     for (let i = 0; i < jobs.length; i += 20) {
       const batch = jobs.slice(i, i + 20);
       await supabase.from("live_jobs").upsert(batch, { onConflict: "id" });
     }
-    const newIds = jobs.map(j => j.id);
-    await supabase.from("live_jobs").delete().not("id", "in", `(${newIds.join(",")})`);
-
+    const newIds = jobs.map((j) => j.id);
+    if (newIds.length > 0) {
+      await supabase.from("live_jobs").delete().not("id", "in", `(${newIds.join(",")})`);
+    }
 
     // Update last fetched
-    await supabase.from("job_meta").upsert({
-      key: "last_fetched",
-      value: now.toISOString(),
-    }, { onConflict: "key" });
+    await supabase.from("job_meta").upsert(
+      { key: "last_fetched", value: now.toISOString() },
+      { onConflict: "key" }
+    );
 
     return NextResponse.json({
       jobs,
