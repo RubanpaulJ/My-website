@@ -1,92 +1,62 @@
 import Link from "next/link";
+import { whatsappLink, PHONE_DISPLAY, EMAIL } from "../lib/site";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-14 pb-6 px-6 mt-16">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
-
-        {/* Brand */}
+    <footer className="bg-ink text-white/70 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-8 grid gap-10 sm:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-3">
-            Journify<span className="text-blue-400">.</span>
-          </h2>
-          <p className="text-sm text-gray-400 leading-relaxed">
-            India's platform for IT freshers and academic research services. Start your journey today.
+          <p className="font-display text-2xl font-extrabold text-white">
+            Journify<span className="text-lime">.</span>
           </p>
-          <div className="flex gap-3 mt-4">
-            <a href="#" className="w-8 h-8 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center text-xs transition">
-              in
-            </a>
-            <a href="#" className="w-8 h-8 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center text-xs transition">
-              tw
-            </a>
-            <a href="#" className="w-8 h-8 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center text-xs transition">
-              ig
-            </a>
-          </div>
+          <p className="mt-3 text-sm leading-relaxed max-w-xs">
+            Final year projects, mini projects and research papers for engineering students across India.
+          </p>
         </div>
-
-        {/* Quick Links */}
         <div>
-          <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/" className="hover:text-blue-400 transition">Home</Link></li>
-            <li><Link href="/jobs" className="hover:text-blue-400 transition">Browse Jobs</Link></li>
-            <li><Link href="/services" className="hover:text-blue-400 transition">Services</Link></li>
-            <li><Link href="/match" className="hover:text-blue-400 transition">AI Job Match</Link></li>
-            <li><Link href="/profile" className="hover:text-blue-400 transition">My Profile</Link></li>
+          <h2 className="text-xs font-bold text-white uppercase tracking-[0.15em]">Explore</h2>
+          <ul className="mt-4 space-y-2.5 text-sm">
+            <li><Link href="/" className="hover:text-lime">Home</Link></li>
+            <li><Link href="/services" className="hover:text-lime">Pricing</Link></li>
+            <li><Link href="/#how-it-works" className="hover:text-lime">How it works</Link></li>
+            <li><Link href="/#faq" className="hover:text-lime">FAQ</Link></li>
           </ul>
         </div>
-
-        {/* Services */}
         <div>
-          <h3 className="text-white font-semibold mb-4">Our Services</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/services" className="hover:text-blue-400 transition">Implementation</Link></li>
-            <li><Link href="/services" className="hover:text-blue-400 transition">Conference Paper</Link></li>
-            <li><Link href="/services" className="hover:text-blue-400 transition">Journal Paper</Link></li>
-            <li><Link href="/services" className="hover:text-blue-400 transition">PPT Presentation</Link></li>
-            <li><Link href="/services" className="hover:text-blue-400 transition">Plagiarism Removal</Link></li>
-          </ul>
-        </div>
-
-        {/* Contact */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Contact Us</h3>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-2">
-              <span>📧</span>
-              <span>journifyorg@gmail.com</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span>📍</span>
-              <span>Bengaluru,India</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span>📞</span>
-              <span>+91 79042 03916</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span>💬</span>
-              <a href="https://wa.me/917904203916" target="_blank" rel="noopener noreferrer"
-                className="hover:text-green-400 transition">
-                WhatsApp Us
+          <h2 className="text-xs font-bold text-white uppercase tracking-[0.15em]">Contact</h2>
+          <ul className="mt-4 space-y-2.5 text-sm">
+            <li>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="hover:text-lime">
+                WhatsApp · {PHONE_DISPLAY}
               </a>
             </li>
+            <li><a href={`mailto:${EMAIL}`} className="hover:text-lime break-all">{EMAIL}</a></li>
+            <li>Chennai, Tamil Nadu</li>
           </ul>
         </div>
-
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-700 pt-6 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500 gap-2">
-        <p>© 2025 Journify. All rights reserved.</p>
-        <div className="flex gap-4">
-          <Link href="#" className="hover:text-blue-400 transition">Privacy Policy</Link>
-          <Link href="#" className="hover:text-blue-400 transition">Terms of Service</Link>
-          <Link href="#" className="hover:text-blue-400 transition">Refund Policy</Link>
-        </div>
+      <p
+        aria-hidden="true"
+        className="font-display font-extrabold text-white/[0.06] text-[22vw] leading-[0.8] text-center select-none -mb-[3vw]"
+      >
+        journify
+      </p>
+
+      <div className="border-t border-white/10 py-5 pb-24 md:pb-5 text-center text-xs text-white/50">
+        © {new Date().getFullYear()} Journify Technologies. All rights reserved.
       </div>
+
+      <a
+        href={whatsappLink()}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with us on WhatsApp"
+        className="md:hidden fixed bottom-5 right-5 z-50 flex items-center justify-center w-14 h-14 rounded-2xl bg-wa text-ink shadow-[0_8px_24px_-6px_rgba(18,140,75,0.6)] active:scale-95 transition-transform"
+      >
+        <WhatsAppIcon className="w-7 h-7" />
+      </a>
     </footer>
   );
 }
