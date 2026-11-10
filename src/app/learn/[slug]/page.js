@@ -1,59 +1,72 @@
+import { notFound } from "next/navigation";
 import JavaCourse from "../../../components/learn/JavaCourse";
+import PythonCourse from "../../../components/learn/PythonCourse";
+import CCourse from "../../../components/learn/CCourse";
+import SqlCourse from "../../../components/learn/SqlCourse";
+import WebCourse from "../../../components/learn/WebCourse";
 import SampleCertificate from "../../../components/learn/SampleCertificate";
-import { JAVA_COURSE, moduleMinutes } from "../../../lib/courses/java";
+import { COURSES, getCourse, certificateInfo } from "../../../lib/courses";
+import { moduleMinutes } from "../../../lib/courses/shared";
 import { SITE_URL } from "../../../lib/site";
 
-const DESCRIPTION =
-  "Free 12-hour Java course from beginner to advanced: 12 modules, 60+ quiz questions, 12 coding challenges and a final exam. Resume anytime and earn a free certificate from Journify Technologies.";
+const PLAYERS = { java: JavaCourse, python: PythonCourse, c: CCourse, sql: SqlCourse, web: WebCourse };
 
-export const metadata = {
-  title: "Free Java Course with Certificate — Beginner to Advanced (12 Hours)",
-  description: DESCRIPTION,
-  alternates: { canonical: "/learn/java" },
-  openGraph: {
-    url: "/learn/java",
-    title: "Free Java Course with Certificate — Beginner to Advanced | Journify",
-    description: DESCRIPTION,
-    images: ["/opengraph-image"],
-  },
-  twitter: {
-    title: "Free Java Course with Certificate | Journify",
-    description: DESCRIPTION,
-  },
-};
+export const dynamicParams = false;
 
-const course = JAVA_COURSE;
-const quizCount = course.modules.reduce((t, m) => t + m.quiz.length, 0) + course.finalExam.length;
+export function generateStaticParams() {
+  return COURSES.map((c) => ({ slug: c.slug }));
+}
 
-const courseSchema = {
-  "@context": "https://schema.org",
-  "@type": "Course",
-  name: course.title,
-  description: DESCRIPTION,
-  url: `${SITE_URL}/learn/java`,
-  inLanguage: "en",
-  isAccessibleForFree: true,
-  educationalLevel: "Beginner to Advanced",
-  provider: { "@type": "Organization", name: "Journify Technologies", sameAs: SITE_URL },
-  offers: { "@type": "Offer", price: "0", priceCurrency: "INR", category: "Free" },
-  hasCourseInstance: {
-    "@type": "CourseInstance",
-    courseMode: "Online",
-    courseWorkload: `PT${course.hours}H`,
-  },
-  syllabusSections: course.modules.map((m) => ({ "@type": "Syllabus", name: m.title, description: m.summary })),
-};
+function describe(course) {
+  const quizCount = course.modules.reduce((t, m) => t + m.quiz.length, 0) + course.finalExam.length;
+  return `Free ${course.hours}-hour ${course.title} course for beginners: ${course.modules.length} modules, ${quizCount} quiz questions, ${course.modules.length} coding challenges and a final exam. Resume anytime and earn a free certificate from Journify Technologies.`;
+}
 
-const HIGHLIGHTS = [
-  { value: `${course.hours} hrs`, label: "of guided learning" },
-  { value: course.modules.length, label: "modules" },
-  { value: `${quizCount}`, label: "quiz questions" },
-  { value: course.modules.length, label: "coding challenges" },
-];
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const course = getCourse(slug);
+  if (!course) return {};
+  const description = describe(course);
+  const title = `Free ${course.title} Course with Certificate (${course.hours} Hours)`;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/learn/${course.slug}` },
+    openGraph: { url: `/learn/${course.slug}`, title: `${title} | Journify`, description, images: ["/opengraph-image"] },
+    twitter: { title: `${title} | Journify`, description },
+  };
+}
 
-export default function JavaCoursePage() {
+export default async function CoursePage({ params }) {
+  const { slug } = await params;
+  const course = getCourse(slug);
+  if (!course) notFound();
+  const Player = PLAYERS[course.slug];
+  const quizCount = course.modules.reduce((t, m) => t + m.quiz.length, 0) + course.finalExam.length;
+
+  const courseSchema = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: course.title,
+    description: describe(course),
+    url: `${SITE_URL}/learn/${course.slug}`,
+    inLanguage: "en",
+    isAccessibleForFree: true,
+    provider: { "@type": "Organization", name: "Journify Technologies", sameAs: SITE_URL },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "INR", category: "Free" },
+    hasCourseInstance: { "@type": "CourseInstance", courseMode: "Online", courseWorkload: `PT${course.hours}H` },
+    syllabusSections: course.modules.map((m) => ({ "@type": "Syllabus", name: m.title, description: m.summary })),
+  };
+
+  const highlights = [
+    { value: `${course.hours} hrs`, label: "of guided learning" },
+    { value: course.modules.length, label: "modules" },
+    { value: quizCount, label: "quiz questions" },
+    { value: course.modules.length, label: "coding challenges" },
+  ];
+
   return (
-    <JavaCourse>
+    <Player>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
 
       <section className="dots -mt-[76px] pt-[76px]">
@@ -63,11 +76,11 @@ export default function JavaCoursePage() {
             100% free · Certificate included
           </p>
           <h1 className="mt-6 font-display text-[40px] leading-[1.02] sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl">
-            Learn Java. <span className="marker">Beginner to pro</span> in 12 hours.
+            Learn {course.title}. <span className="marker">Step by step</span> in {course.hours} hours.
           </h1>
           <p className="mt-6 text-base sm:text-lg text-ink-soft max-w-2xl">
-            Short lessons, quizzes after every module and real coding challenges — from your first “Hello, World!” to OOP,
-            collections, streams and threads. Stop anytime; your progress is saved and resumes exactly where you left off.
+            {course.tagline} Short lessons, a quiz after every module and real coding challenges. Stop anytime — your
+            progress is saved and resumes exactly where you left off.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <a href="#register" className="inline-flex items-center justify-center bg-ink hover:bg-brand text-white font-bold px-7 py-4 rounded-xl transition-colors">
@@ -79,7 +92,7 @@ export default function JavaCoursePage() {
           </div>
 
           <dl className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {HIGHLIGHTS.map((h) => (
+            {highlights.map((h) => (
               <div key={h.label} className="rounded-2xl bg-paper border border-line p-4 sm:p-5">
                 <dt className="sr-only">{h.label}</dt>
                 <dd className="font-display text-3xl sm:text-4xl font-extrabold text-brand">{h.value}</dd>
@@ -123,8 +136,8 @@ export default function JavaCoursePage() {
             <div>
               <h3 className="font-display text-xl font-bold">Final exam &amp; certificate</h3>
               <p className="mt-1 text-sm text-white/70">
-                {course.finalExam.length} questions across the whole course. Score {course.passPercent}% or more to download your
-                certificate of completion from Journify Technologies — and add it to LinkedIn.
+                {course.finalExam.length} questions across the whole course. Score {course.passPercent}% or more to download
+                your certificate of completion from Journify Technologies — and add it to LinkedIn.
               </p>
             </div>
           </li>
@@ -151,9 +164,9 @@ export default function JavaCoursePage() {
               ))}
             </ul>
           </div>
-          <SampleCertificate />
+          <SampleCertificate course={certificateInfo(course)} />
         </div>
       </section>
-    </JavaCourse>
+    </Player>
   );
 }

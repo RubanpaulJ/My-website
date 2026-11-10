@@ -2,12 +2,16 @@
 import { useState } from "react";
 import Markdown, { CodeBlock } from "./Markdown";
 
-function stripComments(code) {
-  return code.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"])\/\/.*$/gm, "$1");
+function stripComments(code, lang) {
+  if (lang === "python") return code.replace(/(^|[^"'])#.*$/gm, "$1");
+  if (lang === "sql") return code.replace(/\/\*[\s\S]*?\*\//g, "").replace(/--.*$/gm, "");
+  let out = code.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'\\])\/\/.*$/gm, "$1");
+  if (lang === "html") out = out.replace(/<!--[\s\S]*?-->/g, "");
+  return out;
 }
 
-export function checkCode(challenge, code) {
-  const clean = stripComments(code);
+export function checkCode(challenge, code, lang = "java") {
+  const clean = stripComments(code, lang);
   const results = challenge.rules.map((r) => ({ msg: r.msg, ok: r.re.test(clean) }));
   for (const f of challenge.forbid ?? []) {
     results.push({ msg: f.msg, ok: !f.re.test(clean) });
@@ -15,7 +19,8 @@ export function checkCode(challenge, code) {
   return results;
 }
 
-export default function Challenge({ challenge, state, onChange, onContinue, continueLabel = "Continue" }) {
+export default function Challenge({ challenge, course, state, onChange, onContinue, continueLabel = "Continue" }) {
+  const lang = course?.lang ?? "java";
   const code = state?.code ?? challenge.starter;
   const [results, setResults] = useState(null);
   const [showSolution, setShowSolution] = useState(false);
@@ -39,7 +44,7 @@ export default function Challenge({ challenge, state, onChange, onContinue, cont
   }
 
   function check() {
-    const r = checkCode(challenge, code);
+    const r = checkCode(challenge, code, lang);
     setResults(r);
     const ok = r.every((x) => x.ok);
     onChange({ ...state, code, passed: passed || ok, attempts: (state?.attempts ?? 0) + 1 });
@@ -56,7 +61,7 @@ export default function Challenge({ challenge, state, onChange, onContinue, cont
 
       <div className="mt-6 rounded-2xl bg-ink overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
-          <span className="text-xs font-bold uppercase tracking-[0.15em] text-white/50">Main.java</span>
+          <span className="text-xs font-bold uppercase tracking-[0.15em] text-white/50">{course?.fileName ?? "Main.java"}</span>
           <button
             type="button"
             onClick={() => {
@@ -81,8 +86,21 @@ export default function Challenge({ challenge, state, onChange, onContinue, cont
           className="block w-full bg-transparent text-[#e9e6f5] font-mono text-[13.5px] leading-relaxed p-4 outline-none resize-y caret-lime"
         />
       </div>
+      {course?.preview ? (
+        <div className="mt-4 rounded-2xl border border-line overflow-hidden bg-white">
+          <div className="px-4 py-2 border-b border-line text-xs font-bold uppercase tracking-[0.15em] text-ink-soft">Live preview</div>
+          <iframe
+            title="Live preview of your code"
+            srcDoc={code}
+            sandbox="allow-scripts"
+            className="block w-full h-72 bg-white"
+          />
+        </div>
+      ) : null}
       <p className="mt-2 text-xs text-ink-soft">
-        Your code is saved automatically. It is checked for the required structure — run it in your IDE to see the output.
+        {course?.preview
+          ? "Your code is saved automatically and the preview updates as you type. Check my code verifies the required structure."
+          : "Your code is saved automatically. It is checked for the required structure — run it on your computer to see the output."}
       </p>
 
       <div className="mt-5 flex flex-wrap gap-3">
@@ -130,7 +148,7 @@ export default function Challenge({ challenge, state, onChange, onContinue, cont
       {showSolution && (
         <div className="mt-6">
           <p className="font-display text-lg font-bold">Model solution</p>
-          <CodeBlock code={challenge.solution} label="java" />
+          <CodeBlock code={challenge.solution} label={lang} />
         </div>
       )}
     </div>

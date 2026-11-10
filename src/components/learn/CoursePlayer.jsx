@@ -5,7 +5,7 @@ import Quiz from "./Quiz";
 import Challenge from "./Challenge";
 import Certificate from "./Certificate";
 import RegisterForm from "./RegisterForm";
-import { QUIZ_MINUTES, CHALLENGE_MINUTES, FINAL_MINUTES } from "../../lib/courses/java";
+import { QUIZ_MINUTES, CHALLENGE_MINUTES, FINAL_MINUTES } from "../../lib/courses/shared";
 import {
   loadProgress,
   saveProgress,
@@ -440,6 +440,7 @@ export default function CoursePlayer({ course, overview }) {
           <Challenge
             key={`ch-${m}`}
             challenge={mod.challenge}
+            course={course}
             state={p.challenge[m]}
             onChange={(c) => update((prev) => ({ ...prev, challenge: { ...prev.challenge, [m]: c } }))}
             onContinue={() => go(last ? { m: nModules, s: 0 } : { m: m + 1, s: 0 })}

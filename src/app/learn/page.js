@@ -1,18 +1,15 @@
 import Link from "next/link";
-import { JAVA_COURSE } from "../../lib/courses/java";
+import { COURSES } from "../../lib/courses";
 
 export const metadata = {
-  title: "Free Programming Courses with Certificate",
+  title: "Free Programming Courses with Certificate — Java, Python, C, SQL, Web",
   description:
-    "Learn programming for free at Journify. Self-paced courses with lessons, quizzes, coding challenges and a free certificate. Start with our 12-hour Java course.",
+    "Learn programming for free at Journify: Java, Python, C, SQL and Web Development. 12-hour self-paced courses with lessons, quizzes, coding challenges and a free certificate.",
   alternates: { canonical: "/learn" },
   openGraph: { url: "/learn", images: ["/opengraph-image"] },
 };
 
-const COMING_SOON = ["Python", "C Programming", "SQL & Databases", "Web Development"];
-
 export default function LearnPage() {
-  const c = JAVA_COURSE;
   return (
     <>
       <section className="dots -mt-[76px] pt-[76px]">
@@ -22,53 +19,53 @@ export default function LearnPage() {
             Learn to code. <span className="marker">Free.</span> With a certificate.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-ink-soft max-w-2xl">
-            Self-paced courses with short lessons, quizzes and coding challenges. No sign-up, no fees — your progress saves
-            automatically so you can stop and resume anytime.
+            {COURSES.length} self-paced courses with short lessons, quizzes and coding challenges. No sign-up, no fees — your
+            progress saves automatically so you can stop and resume anytime.
           </p>
         </div>
       </section>
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24" aria-label="Courses">
-        <article className="grid md:grid-cols-[1.3fr_1fr] rounded-[32px] overflow-hidden bg-ink text-white">
-          <div className="p-6 sm:p-10">
-            <div className="flex flex-wrap gap-2">
-              <span className="bg-lime text-ink text-xs font-bold px-3 py-1 rounded-full">Free</span>
-              <span className="bg-white/10 text-xs font-bold px-3 py-1 rounded-full">{c.hours} hours</span>
-              <span className="bg-white/10 text-xs font-bold px-3 py-1 rounded-full">Certificate</span>
-            </div>
-            <h2 className="mt-5 font-display text-3xl sm:text-4xl font-extrabold tracking-tight">{c.title}</h2>
-            <p className="mt-3 text-white/70">
-              {c.modules.length} modules covering basics, OOP, exceptions, collections, streams and threads — with a quiz and
-              coding challenge in every module and a final exam.
-            </p>
-            <Link
-              href="/learn/java"
-              className="mt-8 inline-flex items-center gap-2 bg-lime text-ink hover:bg-white font-bold px-7 py-4 rounded-xl transition-colors"
-            >
-              Start learning Java →
-            </Link>
-          </div>
-          <div className="relative bg-brand p-6 sm:p-10 flex items-center" aria-hidden="true">
-            <pre className="w-full rounded-2xl bg-ink/80 p-5 text-[13px] leading-relaxed text-[#e9e6f5] font-mono overflow-hidden">
-{`public class Main {
-  public static void main(String[] a) {
-    System.out.println(
-      "Hello, Journify!");
-  }
-}`}
-            </pre>
-            <span className="absolute top-5 right-5 font-display text-7xl font-extrabold text-white/15">☕</span>
-          </div>
-        </article>
-
-        <h2 className="mt-14 font-display text-2xl font-bold">Coming soon</h2>
-        <ul className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
-          {COMING_SOON.map((name) => (
-            <li key={name} className="rounded-2xl border-2 border-dashed border-line bg-paper p-5">
-              <p className="font-display text-lg font-bold">{name}</p>
-              <p className="mt-1 text-xs font-semibold text-ink-soft">Coming soon</p>
-            </li>
-          ))}
+        <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {COURSES.map((c, i) => {
+            const featured = i === 0;
+            return (
+              <li key={c.slug}>
+                <Link
+                  href={`/learn/${c.slug}`}
+                  className={`group flex flex-col h-full rounded-3xl p-6 sm:p-7 transition-transform hover:-translate-y-1 ${
+                    featured ? "bg-ink text-white" : "bg-paper border border-line"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`flex items-center justify-center w-14 h-14 rounded-2xl font-display text-lg font-extrabold ${
+                        featured ? "bg-lime text-ink" : "bg-ink text-lime"
+                      }`}
+                      aria-hidden="true"
+                    >
+                      {c.icon}
+                    </span>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${featured ? "bg-white/10" : "bg-lime"}`}>
+                      Free · {c.hours} hrs
+                    </span>
+                  </div>
+                  <h2 className="mt-6 font-display text-2xl font-extrabold tracking-tight">{c.title}</h2>
+                  <p className={`mt-2 text-[15px] flex-1 ${featured ? "text-white/70" : "text-ink-soft"}`}>{c.tagline}</p>
+                  <p className={`mt-4 text-xs font-semibold ${featured ? "text-white/50" : "text-ink-soft/80"}`}>
+                    {c.modules.length} modules · {c.modules.length} coding challenges · Certificate
+                  </p>
+                  <span
+                    className={`mt-6 inline-flex items-center justify-center font-bold px-5 py-3 rounded-xl transition-colors ${
+                      featured ? "bg-lime text-ink group-hover:bg-white" : "bg-ink text-white group-hover:bg-brand"
+                    }`}
+                  >
+                    Start learning →
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </section>
     </>

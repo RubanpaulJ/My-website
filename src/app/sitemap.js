@@ -1,3 +1,5 @@
+import { COURSES } from "../lib/courses";
+
 export default function sitemap() {
   const baseUrl = "https://journify.tech";
   const currentDate = new Date();
@@ -20,11 +22,11 @@ export default function sitemap() {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/learn/java`,
+    ...COURSES.map((c) => ({
+      url: `${baseUrl}/learn/${c.slug}`,
       lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 0.9,
-    },
+    })),
   ];
 }

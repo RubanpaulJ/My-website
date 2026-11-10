@@ -209,7 +209,7 @@ export default function Certificate({ learner, course, completedAt, certId, scor
     `&organizationName=${encodeURIComponent("Journify Technologies")}` +
     `&issueYear=${d.getFullYear()}&issueMonth=${d.getMonth() + 1}` +
     `&certId=${encodeURIComponent(certId)}` +
-    `&certUrl=${encodeURIComponent("https://journify.tech/learn/java")}`;
+    `&certUrl=${encodeURIComponent(`https://journify.tech/learn/${course.slug}`)}`;
 
   return (
     <div>
