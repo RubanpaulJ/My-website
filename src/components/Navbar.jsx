@@ -8,6 +8,7 @@ import WhatsAppIcon from "./WhatsAppIcon";
 const LINKS = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Pricing" },
+  { href: "/#programs", label: "Internships & Training" },
   { href: "/#how-it-works", label: "How it works" },
   { href: "/#faq", label: "FAQ" },
 ];
