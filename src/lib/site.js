@@ -51,6 +51,48 @@ export const SERVICES = [
   },
 ];
 
+export const PROGRAMS = [
+  {
+    id: "internship",
+    name: "Internships in all domains",
+    description:
+      "Hands-on internships where you work on real projects with guidance from our developers — in any domain you choose.",
+    points: [
+      "Machine Learning, AI, Web, Android, IoT, Cloud & more",
+      "Work on live, real-world projects",
+      "Mentor guidance throughout",
+      "Internship certificate on completion",
+    ],
+    message: "Hi Journify, I'm interested in an internship. Please share the available domains and details.",
+  },
+  {
+    id: "erp-crm",
+    name: "ERP & CRM projects",
+    description:
+      "Custom ERP and CRM systems for students and businesses — built to manage inventory, sales, customers, HR and more.",
+    points: [
+      "Custom ERP modules (inventory, billing, HR, payroll)",
+      "CRM for leads, customers & follow-ups",
+      "Dashboards and reports",
+      "Source code, deployment & support",
+    ],
+    message: "Hi Journify, I'm interested in an ERP / CRM project. Please share more details.",
+  },
+  {
+    id: "training",
+    name: "Training & experience certificate",
+    description:
+      "Industry-focused training that takes you from basics to building real projects — and ends with a professional experience certificate.",
+    points: [
+      "Practical, project-based training",
+      "Industry-relevant tools & technologies",
+      "Build a portfolio you can show recruiters",
+      "Professional experience certificate",
+    ],
+    message: "Hi Journify, I'm interested in your training and experience certificate program. Please share details.",
+  },
+];
+
 export function serviceMessage(service) {
   return `Hi Journify, I'm interested in the "${service.name}" service (₹${service.price}). Please share more details.`;
 }

@@ -1,20 +1,20 @@
-import { SITE_URL, SERVICES } from "../../lib/site";
+import { SITE_URL, SERVICES, PROGRAMS } from "../../lib/site";
 
 const DESCRIPTION =
-  "Fixed-price project packages: mini project ₹2,499, final year project with conference paper ₹3,499, final year project with journal paper ₹4,499. Implementation and source code included.";
+  "Fixed-price project packages: mini project ₹2,499, final year project with conference paper ₹3,499, final year project with journal paper ₹4,499. Implementation and source code included. Also internships in all domains, ERP & CRM projects, and training with an experience certificate.";
 
 export const metadata = {
-  title: "Pricing — Mini & Final Year Project Packages",
+  title: "Pricing — Projects, Internships, ERP & CRM, Training",
   description: DESCRIPTION,
   alternates: { canonical: "/services" },
   openGraph: {
     url: "/services",
-    title: "Pricing — Mini & Final Year Project Packages | Journify",
+    title: "Pricing — Projects, Internships, ERP & CRM, Training | Journify",
     description: DESCRIPTION,
     images: ["/opengraph-image"],
   },
   twitter: {
-    title: "Pricing — Mini & Final Year Project Packages | Journify",
+    title: "Pricing — Projects, Internships, ERP & CRM, Training | Journify",
     description: DESCRIPTION,
   },
 };
@@ -41,7 +41,19 @@ const structuredData = {
             url: `${SITE_URL}/services`,
           },
         },
-      })),
+      })).concat(
+        PROGRAMS.map((p, i) => ({
+          "@type": "ListItem",
+          position: SERVICES.length + i + 1,
+          item: {
+            "@type": "Service",
+            name: p.name,
+            description: p.description,
+            provider: { "@id": `${SITE_URL}/#business` },
+            areaServed: { "@type": "Country", name: "India" },
+          },
+        }))
+      ),
     },
     {
       "@type": "BreadcrumbList",

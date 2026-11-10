@@ -1,6 +1,7 @@
 import ServiceCard from "../../components/ServiceCard";
+import ProgramCard from "../../components/ProgramCard";
 import WhatsAppIcon from "../../components/WhatsAppIcon";
-import { SERVICES, whatsappLink } from "../../lib/site";
+import { SERVICES, PROGRAMS, whatsappLink } from "../../lib/site";
 
 export default function ServicesPage() {
   return (
@@ -40,6 +41,26 @@ export default function ServicesPage() {
             <WhatsAppIcon />
             Ask on WhatsApp
           </a>
+        </div>
+      </section>
+
+      <section id="programs" className="scroll-mt-24 bg-ink border-b border-white/10" aria-labelledby="programs-heading">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+          <div className="max-w-2xl">
+            <p className="text-sm font-bold uppercase tracking-[0.15em] text-lime">Beyond projects</p>
+            <h2 id="programs-heading" className="mt-3 font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+              Internships, ERP & CRM, and training.
+            </h2>
+            <p className="mt-4 text-base sm:text-lg text-white/65">
+              Build real experience with us — from internships and business software to professional training with a
+              certificate.
+            </p>
+          </div>
+          <div className="mt-12 sm:mt-16 grid gap-6 md:grid-cols-3">
+            {PROGRAMS.map((p, i) => (
+              <ProgramCard key={p.id} program={p} index={i} />
+            ))}
+          </div>
         </div>
       </section>
     </>
