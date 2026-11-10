@@ -125,6 +125,25 @@ export default function Home() {
         </dl>
       </section>
 
+      {/* Free course promo */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16" aria-label="Free Java course">
+        <Link
+          href="/learn/java"
+          className="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-3xl bg-lime p-5 sm:p-7 transition-transform hover:-translate-y-0.5"
+        >
+          <span className="flex items-center justify-center w-14 h-14 shrink-0 rounded-2xl bg-ink text-2xl" aria-hidden="true">☕</span>
+          <span className="flex-1">
+            <span className="block text-xs font-bold uppercase tracking-[0.15em]">New · 100% free</span>
+            <span className="block mt-1 font-display text-xl sm:text-2xl font-extrabold">
+              12-hour Java course — beginner to advanced, with a certificate
+            </span>
+          </span>
+          <span className="inline-flex items-center justify-center bg-ink text-white font-bold px-5 py-3 rounded-xl group-hover:bg-brand transition-colors">
+            Start free →
+          </span>
+        </Link>
+      </section>
+
       {/* Services */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24" aria-labelledby="services-heading">
         <div className="max-w-2xl">

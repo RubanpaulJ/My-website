@@ -9,7 +9,7 @@ const LINKS = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Pricing" },
   { href: "/#programs", label: "Internships & Training" },
-  { href: "/#how-it-works", label: "How it works" },
+  { href: "/learn", label: "Free Courses" },
   { href: "/#faq", label: "FAQ" },
 ];
 
@@ -35,7 +35,7 @@ export default function Navbar() {
 
         <ul className="hidden md:flex items-center gap-1">
           {LINKS.map((l) => {
-            const active = pathname === l.href;
+            const active = l.href === "/" ? pathname === "/" : !l.href.includes("#") && pathname.startsWith(l.href);
             return (
               <li key={l.href}>
                 <Link
