@@ -1,10 +1,10 @@
 import ProjectLanding from "../../components/ProjectLanding";
 
 const DESCRIPTION =
-  "Buy final year projects with full source code, documentation, PPT and a conference (₹3,499) or journal paper (₹4,499). For CSE, IT, ECE, EEE and MCA students in Chennai, Tamil Nadu and across India. Order on WhatsApp.";
+  "Buy final year projects with full source code, documentation, PPT and a conference (₹3,499) or journal paper (₹4,499). For CSE, IT, ECE, EEE and MCA students across India — delivered online. Order on WhatsApp.";
 
 export const metadata = {
-  title: "Final Year Projects with Source Code & Paper — Chennai, Tamil Nadu",
+  title: "Final Year Projects with Source Code & Paper for Students Across India",
   description: DESCRIPTION,
   alternates: { canonical: "/final-year-projects" },
   openGraph: {
@@ -37,8 +37,8 @@ const FAQS = [
     a: "Both include the full project. The ₹3,499 package includes a paper prepared in conference format (IEEE / Springer style); the ₹4,499 package includes a paper prepared for journal submission.",
   },
   {
-    q: "Do you work with students outside Chennai?",
-    a: "Yes. Everything is handled over WhatsApp and online sessions, so we support students across Tamil Nadu — Coimbatore, Madurai, Trichy, Salem, Tirunelveli — and the rest of India.",
+    q: "Do you work with students from any state in India?",
+    a: "Yes. Everything is handled over WhatsApp and online sessions, so we support students from every state — Tamil Nadu, Karnataka, Kerala, Andhra Pradesh, Telangana, Maharashtra, Delhi NCR, West Bengal and beyond. Delivery, setup help and viva guidance all happen online.",
   },
   {
     q: "Will you explain the project for my viva?",
@@ -51,7 +51,7 @@ export default function FinalYearProjectsPage() {
     <ProjectLanding
       path="/final-year-projects"
       crumb="Final Year Projects"
-      eyebrow="Final year projects · Chennai, Tamil Nadu"
+      eyebrow="Final year projects · Delivered across India"
       title="Final year projects with source code, documentation & paper"
       intro="Complete final year projects for BE, BTech, ME, MCA and MSc students — working implementation, full source code, report, PPT and a conference or journal paper. Sorted over WhatsApp, delivered on time."
       packageIds={["final-year-conference", "final-year-journal"]}
@@ -93,7 +93,7 @@ export default function FinalYearProjectsPage() {
         {
           h2: "Why students choose Journify",
           paragraphs: [
-            "Students across Tamil Nadu trust Journify because the price is fixed and published, the paper is included, and you can talk to the people building your project directly on WhatsApp. There's no sign-up, no hidden charges and no middlemen.",
+            "Students across India trust Journify because the price is fixed and published, the paper is included, and you can talk to the people building your project directly on WhatsApp. There's no sign-up, no hidden charges and no middlemen.",
             "Looking for title inspiration first? Browse our free list of final year project ideas by domain, or start with one of our free programming courses to strengthen your basics before your reviews.",
           ],
         },

@@ -34,7 +34,7 @@ export default function ProjectLanding({ path, crumb, eyebrow, title, intro, pac
         name: s.name,
         description: s.features.join(", "),
         provider: { "@id": `${SITE_URL}/#business` },
-        areaServed: [{ "@type": "State", name: "Tamil Nadu" }, { "@type": "Country", name: "India" }],
+        areaServed: { "@type": "Country", name: "India" },
         offers: { "@type": "Offer", price: String(s.price), priceCurrency: "INR", url: `${SITE_URL}${path}` },
       })),
     ],

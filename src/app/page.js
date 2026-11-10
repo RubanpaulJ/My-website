@@ -77,7 +77,7 @@ export default function Home() {
           <div className="text-center lg:text-left">
             <p className="inline-flex items-center gap-2 bg-paper border border-line text-sm font-semibold px-3.5 py-1.5 rounded-full">
               <span className="w-2 h-2 rounded-full bg-wa animate-pulse" />
-              Engineering projects · Trusted by 500+ students in Tamil Nadu
+              Engineering projects · Trusted by 500+ students across India
             </p>
             <h1 className="mt-6 font-display text-[40px] leading-[1.02] sm:text-6xl lg:text-7xl font-extrabold tracking-tight">
               Your project.

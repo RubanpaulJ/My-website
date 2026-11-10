@@ -8,7 +8,7 @@ const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bric
 const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", display: "swap" });
 
 const DESCRIPTION =
-  "Final year projects and mini projects for engineering students in Tamil Nadu & India — full implementation, source code and conference or journal paper. Mini project ₹2,499, final year from ₹3,499. Order on WhatsApp.";
+  "Final year projects and mini projects for engineering students across India — full implementation, source code and conference or journal paper. Mini project ₹2,499, final year from ₹3,499. Order on WhatsApp.";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -24,8 +24,9 @@ export const metadata = {
     "final year project with conference paper",
     "final year project with journal paper",
     "mini project with source code",
-    "engineering final year project Tamil Nadu",
-    "final year project Chennai",
+    "final year projects India",
+    "buy final year project online",
+    "mini projects for engineering students",
     "IEEE conference paper writing",
     "journal paper writing for students",
     "Journify",
@@ -91,10 +92,7 @@ const structuredData = {
         addressRegion: "Tamil Nadu",
         addressCountry: "IN",
       },
-      areaServed: [
-        { "@type": "State", name: "Tamil Nadu" },
-        { "@type": "Country", name: "India" },
-      ],
+      areaServed: { "@type": "Country", name: "India" },
       contactPoint: {
         "@type": "ContactPoint",
         telephone: `+${WHATSAPP_NUMBER}`,

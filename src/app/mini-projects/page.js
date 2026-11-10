@@ -1,7 +1,7 @@
 import ProjectLanding from "../../components/ProjectLanding";
 
 const DESCRIPTION =
-  "Buy mini projects with source code and documentation for ₹2,499. Python, Java, web, ML and IoT mini projects for CSE, IT, ECE and MCA students in Chennai, Tamil Nadu and across India. Order on WhatsApp.";
+  "Buy mini projects with source code and documentation for ₹2,499. Python, Java, web, ML and IoT mini projects for CSE, IT, ECE and MCA students across India — delivered online. Order on WhatsApp.";
 
 export const metadata = {
   title: "Mini Projects with Source Code for Engineering Students — ₹2,499",
@@ -43,7 +43,7 @@ export default function MiniProjectsPage() {
     <ProjectLanding
       path="/mini-projects"
       crumb="Mini Projects"
-      eyebrow="Mini projects · Chennai, Tamil Nadu"
+      eyebrow="Mini projects · Delivered across India"
       title="Mini projects with source code & documentation — ₹2,499"
       intro="Semester mini projects for engineering, MCA and science students — complete implementation, full source code, documentation and help to explain it in your review. Ordered and delivered over WhatsApp."
       packageIds={["mini-project"]}
