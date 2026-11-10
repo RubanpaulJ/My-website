@@ -30,7 +30,7 @@ function fitText(ctx, text, font, maxSize, maxWidth) {
   } while (ctx.measureText(text).width > maxWidth && size > 20);
 }
 
-async function drawCertificate(canvas, { learner, course, completedAt, certId, score }) {
+async function drawCertificate(canvas, { learner, course, completedAt, certId, score, sample }) {
   await document.fonts?.ready;
   const display = cssFont("--font-bricolage", "Georgia, serif");
   const sans = cssFont("--font-jakarta", "Arial, sans-serif");
@@ -119,12 +119,10 @@ async function drawCertificate(canvas, { learner, course, completedAt, certId, s
   ctx.fillText(course.title, W / 2, 890);
 
   ctx.fillStyle = "#4a4558";
+  fitText(ctx, `covering ${course.topics},`, { weight: 500, family: sans }, 28, W - 440);
+  ctx.fillText(`covering ${course.topics},`, W / 2, 950);
   ctx.font = `500 28px ${sans}`;
-  ctx.fillText(
-    `including ${course.modules.length} modules, quizzes, coding challenges and a final assessment (score: ${score}%).`,
-    W / 2,
-    960
-  );
+  ctx.fillText(`and passed the final assessment with a score of ${score}%.`, W / 2, 995);
 
   // Footer: date, signature, ID
   const dateStr = new Date(completedAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
@@ -144,45 +142,36 @@ async function drawCertificate(canvas, { learner, course, completedAt, certId, s
     ctx.fillText(label, x, footY + 40);
   });
 
-  // Seal
-  const cx = W / 2;
-  const cy = 1140;
-  ctx.fillStyle = INK;
-  ctx.beginPath();
-  ctx.arc(cx, cy, 92, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.strokeStyle = LIME;
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.arc(cx, cy, 78, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.fillStyle = LIME;
-  ctx.font = `800 64px ${display}`;
-  ctx.textBaseline = "middle";
-  ctx.fillText("J", cx, cy - 8);
-  ctx.font = `800 17px ${sans}`;
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText("VERIFIED", cx, cy + 42);
-  ctx.textBaseline = "alphabetic";
-
   ctx.fillStyle = "#4a4558";
   ctx.font = `600 22px ${sans}`;
   ctx.fillText(`Certificate ID: ${certId}`, W / 2, H - 140);
+
+  if (sample) {
+    ctx.save();
+    ctx.translate(W / 2, H / 2);
+    ctx.rotate(-0.42);
+    ctx.fillStyle = "rgba(109, 40, 217, 0.10)";
+    ctx.font = `800 300px ${display}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("SAMPLE", 0, 0);
+    ctx.restore();
+  }
 }
 
-export default function Certificate({ learner, course, completedAt, certId, score }) {
+export default function Certificate({ learner, course, completedAt, certId, score, sample = false }) {
   const canvasRef = useRef(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    drawCertificate(canvasRef.current, { learner, course, completedAt, certId, score }).then(() => {
+    drawCertificate(canvasRef.current, { learner, course, completedAt, certId, score, sample }).then(() => {
       if (!cancelled) setReady(true);
     });
     return () => {
       cancelled = true;
     };
-  }, [learner, course, completedAt, certId, score]);
+  }, [learner, course, completedAt, certId, score, sample]);
 
   const fileBase = `Journify-${course.slug}-certificate-${learner.name.replace(/[^a-z0-9]+/gi, "-")}`;
 
@@ -232,6 +221,7 @@ export default function Certificate({ learner, course, completedAt, certId, scor
           aria-label={`Certificate of completion for ${learner.name}, ${course.title}, certificate ID ${certId}`}
         />
       </div>
+      {!sample && (
       <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-3">
         <button type="button" disabled={!ready} onClick={downloadPng} className="bg-ink hover:bg-brand disabled:opacity-50 text-white font-bold px-6 py-3.5 rounded-xl transition-colors">
           Download image (PNG)
@@ -243,6 +233,7 @@ export default function Certificate({ learner, course, completedAt, certId, scor
           Add to LinkedIn
         </a>
       </div>
+      )}
     </div>
   );
 }

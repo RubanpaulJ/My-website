@@ -1,4 +1,5 @@
 import JavaCourse from "../../../components/learn/JavaCourse";
+import SampleCertificate from "../../../components/learn/SampleCertificate";
 import { JAVA_COURSE, moduleMinutes } from "../../../lib/courses/java";
 import { SITE_URL } from "../../../lib/site";
 
@@ -128,6 +129,30 @@ export default function JavaCoursePage() {
             </div>
           </li>
         </ol>
+      </section>
+
+      <section id="certificate" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16" aria-labelledby="cert-heading">
+        <div className="grid lg:grid-cols-[1fr_1.6fr] gap-8 lg:gap-12 items-center">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.15em] text-brand">Your certificate</p>
+            <h2 id="cert-heading" className="mt-3 font-display text-4xl sm:text-5xl font-extrabold tracking-tight">
+              Finish the course. <span className="marker">Get certified.</span>
+            </h2>
+            <p className="mt-4 text-ink-soft">
+              Pass the final exam and download a certificate of completion from Journify Technologies — with your name,
+              college, score and a unique certificate ID.
+            </p>
+            <ul className="mt-6 space-y-2.5 text-[15px]">
+              {["Download as image (PNG) or PDF", "Add it to your LinkedIn profile in one click", "Free — no hidden charges"].map((t) => (
+                <li key={t} className="flex gap-3">
+                  <span className="mt-2 w-1.5 h-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <SampleCertificate />
+        </div>
       </section>
     </JavaCourse>
   );

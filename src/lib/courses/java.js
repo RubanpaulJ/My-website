@@ -9,8 +9,9 @@ export const FINAL_MINUTES = 15;
 export const JAVA_COURSE = {
   id: "java",
   slug: "java",
-  title: "Java Programming: Beginner to Advanced",
+  title: "Java Programming",
   shortTitle: "Java Programming",
+  topics: "Core Java, Object-Oriented Programming, Exception Handling, Collections, Streams and Multithreading",
   hours: 12,
   passPercent: 70,
   storageKey: "journify.course.java.v1",
