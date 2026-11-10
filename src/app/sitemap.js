@@ -16,6 +16,12 @@ export default function sitemap() {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    ...["/final-year-projects", "/mini-projects", "/project-ideas"].map((path) => ({
+      url: `${baseUrl}${path}`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    })),
     {
       url: `${baseUrl}/learn`,
       lastModified: currentDate,

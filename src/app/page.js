@@ -154,6 +154,11 @@ export default function Home() {
           <p className="mt-4 text-ink-soft text-base sm:text-lg">
             One fixed price each, no hidden charges. For BE, BTech, ME, MCA and MSc students in CSE, IT, ECE, EEE and more.
           </p>
+          <p className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+            <Link href="/final-year-projects" className="text-brand underline decoration-2 underline-offset-4 hover:text-ink">Final year projects →</Link>
+            <Link href="/mini-projects" className="text-brand underline decoration-2 underline-offset-4 hover:text-ink">Mini projects →</Link>
+            <Link href="/project-ideas" className="text-brand underline decoration-2 underline-offset-4 hover:text-ink">Project ideas →</Link>
+          </p>
         </div>
         <div className="mt-12 sm:mt-16 grid gap-6 md:grid-cols-3 items-start">
           {SERVICES.map((s, i) => (

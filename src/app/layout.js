@@ -13,7 +13,7 @@ const DESCRIPTION =
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Final Year Projects with Conference & Journal Paper | Journify",
+    default: "Buy Final Year Projects & Mini Projects with Source Code | Journify",
     template: "%s | Journify",
   },
   description: DESCRIPTION,
@@ -45,12 +45,12 @@ export const metadata = {
     locale: "en_IN",
     url: "/",
     siteName: "Journify",
-    title: "Final Year Projects with Conference & Journal Paper | Journify",
+    title: "Buy Final Year Projects & Mini Projects with Source Code | Journify",
     description: DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Final Year Projects with Conference & Journal Paper | Journify",
+    title: "Buy Final Year Projects & Mini Projects with Source Code | Journify",
     description: DESCRIPTION,
   },
   robots: {

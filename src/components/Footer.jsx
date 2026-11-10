@@ -19,6 +19,9 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             <li><Link href="/" className="hover:text-lime">Home</Link></li>
             <li><Link href="/services" className="hover:text-lime">Pricing</Link></li>
+            <li><Link href="/final-year-projects" className="hover:text-lime">Final Year Projects</Link></li>
+            <li><Link href="/mini-projects" className="hover:text-lime">Mini Projects</Link></li>
+            <li><Link href="/project-ideas" className="hover:text-lime">Project Ideas</Link></li>
             <li><Link href="/#programs" className="hover:text-lime">Internships & Training</Link></li>
             <li><Link href="/learn" className="hover:text-lime">Free Coding Courses</Link></li>
             <li><Link href="/#how-it-works" className="hover:text-lime">How it works</Link></li>
