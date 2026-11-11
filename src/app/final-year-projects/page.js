@@ -99,6 +99,12 @@ export default function FinalYearProjectsPage() {
         },
       ]}
       related={[
+        { href: "/final-year-projects/cse", label: "CSE final year projects", text: "Computer Science and Engineering." },
+        { href: "/final-year-projects/it", label: "IT final year projects", text: "Information Technology." },
+        { href: "/final-year-projects/ece", label: "ECE final year projects", text: "IoT, embedded and image processing." },
+        { href: "/projects/machine-learning", label: "Machine Learning projects", text: "ML and deep learning project ideas." },
+        { href: "/projects/iot", label: "IoT projects", text: "Sensors, ESP32 and dashboards." },
+        { href: "/projects/web", label: "Web development projects", text: "MERN, Django and Spring Boot." },
         { href: "/project-ideas", label: "Final year project ideas", text: "Ideas for CSE, IT and ECE by domain." },
         { href: "/mini-projects", label: "Mini projects", text: "Mini projects with source code for ₹2,499." },
       ]}
